@@ -1,14 +1,6 @@
 # scratch3-mirto
 Files needed to add a mirto robot extension to the scratch 3 offline editor
 
-The files here should be copied into a the respective directories of the scratch 3 files
-from https://github.com/scratchfoundation.  See: 
-https://github.com/scratchfoundation/scratch-vm/blob/develop/docs/extensions.md
-https://scratch.mit.edu/discuss/topic/289503/
-
-Note that the following file will overwrite the default list of extensions:
-scratch-gui\src\lib\libraries\extensions\index.js  
-
 ### Installation ###
 Set up the node.js environemnt as described in these links:
   https://github.com/scratchfoundation/scratch-vm/blob/develop/docs/extensions.md
