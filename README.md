@@ -24,6 +24,9 @@ to rebuild:
 	from scratch-gui folder, run
 		npm run build
 
-to run click:   scratch-gui\build\index.html
+to run: click scratch-gui\build\index.html
 
 Note the Node.js  version used was 16.18
+
+Arduino code for mirto robot is in the ASIP 1.2 repo [here](https://github.com/michaelmargolis/ASIP-V1.2/tree/main/asipRobot/examples/mirtoWifWebsocket\)
+Edit mirto_secrets with the SSID and PW for your access point.
