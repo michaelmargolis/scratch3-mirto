@@ -22,12 +22,13 @@ asip_server_addr = ""
 
 // variables holding ASIP event values
 
+let prev_pos_err = 0; // derived value from line_pos
+    
 var asip_event = {
     button :false,
     distance:0,
     ir_sensors: [0, 0, 0],
     line_pos: 0,
-    prev_pos_err: 0,
     left_bumper:false,
     right_bumper:false,
     edge_detected:false,
@@ -50,7 +51,7 @@ function handleAsipEvent(data) {
     else if(data[1] == 'R') { // ir msg    
         var avg = values[1]*1000 + values[2]*2000;
         var sum = values[0] + values[1] + values[2]
-        asip_event.line_pos = Math.round(((avg / sum) - 1000)/10);
+        asip_event.line_pos = Math.round(((avg / sum) - 1000)/50);
         // console.log(position);       
         var threshold = 250; //  fixme - allow this to be set using asip msg
         // returns true iff any sensor value above threshold
@@ -251,9 +252,9 @@ class Scratch3Mirto {
                 {
                     opcode: 'line_follow_PD',
                     blockType: BlockType.REPORTER,
-                    text: 'line error correction quickness[D]',
+                    text: 'line error correction quickness[PERCENT]%',
                     arguments: {
-                             D: {
+                            PERCENT: {
                             type: ArgumentType.NUMBER,
                             defaultValue: '50',
                         },
@@ -321,10 +322,11 @@ class Scratch3Mirto {
         let right_percent = args['RIGHT_PERCENT'];
         right_percent = parseInt(right_percent, 10);
         // fixme - validate range
+        //msg = `M,c,0,0\n`; // stop motors if running (fixme, move this to arduino code) 
+        //this.send(msg);
         msg = `M,M,${left_percent},${right_percent}\n`; 
         this.send(msg);
-        msg = `M,c,0,0\n`; 
-        this.send(msg);
+
     }
 
     stop_motors(args) {
@@ -416,11 +418,15 @@ class Scratch3Mirto {
     }
     
     line_follow_PD(args) {
-        let D_factor = args['D'];
-        D_factor = parseInt(D_factor, 10);
-        let d = asip_event.line_pos - asip_event.prev_pos_err;
-        asip_event.prev_pos_err = asip_event.line_pos 
-        return d
+        let D_percent = args['PERCENT'];
+        D_percent = parseInt(D_percent, 10);
+        let d = asip_event.line_pos - prev_pos_err;   
+        prev_pos_err  = asip_event.line_pos ;        
+        // console.log(prev_pos_err)
+        if(D_percent == 0)
+            return 0
+        
+        return (d * 100)/ D_percent;
     }
     /* 
     read_ir_sensor(args) {

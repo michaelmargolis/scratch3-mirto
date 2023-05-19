@@ -19,7 +19,6 @@ import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 import translateIconURL from './translate/translate.png';
 import translateInsetIconURL from './translate/translate-small.png';
 
-/*
 import makeymakeyIconURL from './makeymakey/makeymakey.png';
 import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
 
@@ -49,7 +48,6 @@ import gdxforIconURL from './gdxfor/gdxfor.png';
 import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
-*/
 
 export default [
    
@@ -169,8 +167,7 @@ export default [
         ),
         featured: true,
         internetConnectionRequired: true
-    }
-    /*,
+    },
     {
         name: 'Makey Makey',
         extensionId: 'makeymakey',
@@ -338,5 +335,4 @@ export default [
         ),
         helpLink: 'https://scratch.mit.edu/vernier'
     }
-    */
 ];
