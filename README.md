@@ -1,4 +1,4 @@
-# scratch3-mirto
+npm run# scratch3-mirto
 Files needed to add a mirto robot extension to the scratch 3 offline editor.
 
 This version is a proof of concept and requires further development before being deployed.
