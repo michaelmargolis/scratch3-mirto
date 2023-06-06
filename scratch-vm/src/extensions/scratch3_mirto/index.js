@@ -509,15 +509,31 @@ class Scratch3Mirto {
     
     // Websocket stuff
     
+    getIpFromCookie(name) {
+        var cookies = window.document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.indexOf(name + '=') === 0) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return null;
+    }
+    
     connect() {
         if ( connected) {
             // ignore additional connection attempts
             return;  
         } else {
-            if(asip_server_addr.length < 6) {
-                var ip = window.prompt("Enter Mirto IP address", "192.168.1.102");
-                asip_server_addr = `ws://${ip}:9006`              
+            let ip = this.getIpFromCookie('MirtoIpAddr')
+            if(ip === null) {
+                ip = window.prompt("Enter Mirto IP address", "192.168.1.102");               
+                window.document.cookie = 'MirtoIpAddr' + '=' + ip + '; path=/; expires=0';   
+                console.log("saving cookie", 'MirtoIpAddr' + '=' + ip + '; path=/; expires=0' );               
             }
+            else
+                console.log("using cookie");
+            asip_server_addr = `ws://${ip}:9006`
             window.socket = new WebSocket(asip_server_addr);
             this.socket = window.socket;
             console.log("connecting:" + window.socket.toString());
